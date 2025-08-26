@@ -1,0 +1,6 @@
+species: Pongo
+populations:
+  - PA
+  - PP
+population_pairs:
+  - PA_PP

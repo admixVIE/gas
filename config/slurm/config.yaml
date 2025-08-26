@@ -1,0 +1,27 @@
+cluster:
+  mkdir -p logs_slurm/{rule} &&
+  sbatch
+    --nodes={resources.nodes}
+    --ntasks={resources.ntasks}
+    --cpus-per-task={resources.cpus}
+    --mem={resources.mem_gb}G
+    --time={resources.time}
+    --job-name=smk-{rule}-{wildcards}
+    --output=logs_slurm/{rule}/{rule}-{wildcards}-%j
+    --partition={resources.partition}
+default-resources:
+    - time=360
+    - nodes=1
+    - ntasks=1
+    - mem_gb=4
+    - cpus=1
+    - partition=zen4_0768
+restart-times: 3
+max-jobs-per-second: 0.005
+max-status-checks-per-second: 1
+local-cores: 1
+latency-wait: 180
+jobs: 50
+rerun-incomplete: True
+printshellcmds: True
+use-conda: True
