@@ -1,0 +1,9 @@
+species: Gorilla
+populations:
+  - GBB
+  - GBG
+  - GGG
+population_pairs:
+  - GBB_GBG
+  - GBB_GGG
+  - GBG_GGG

@@ -1,0 +1,18 @@
+species: Pan
+populations:
+  - PPA
+  - PTE
+  - PTS
+  - PTV
+  - PTT
+population_pairs:
+  - PPA_PTE
+  - PPA_PTS
+  - PPA_PTV
+  - PPA_PTT
+  - PTE_PTS
+  - PTE_PTV
+  - PTE_PTT
+  - PTS_PTV
+  - PTS_PTT
+  - PTV_PTT
