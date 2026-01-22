@@ -120,7 +120,7 @@ rule all:
             species=species,
             core_freq=["0.15"],
             cutoff=["0.0005", "0.00005"],
-            lineage=lineages_for_species,
+            lineage=ppl,
         ),
         expand(
             "results/selscan/{species}/lineages/{method}_{maf}/candidates/{lineage}.{method}_{maf}.top.{cutoff}.candidate.genes.overlap",

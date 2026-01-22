@@ -163,4 +163,4 @@ rule plot_selscan_overlap_within_species:
     output:
         plot="results/plots/selscan/lineages/{species}.{method}_{maf}.top.{cutoff}.candidate.genes.png",
     script:
-        "../scripts/plot_upset_plot.py"
+        "../scripts/plot_upset_diagram.py"
