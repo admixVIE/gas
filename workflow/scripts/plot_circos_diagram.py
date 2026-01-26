@@ -111,7 +111,7 @@ legend = fig.legend(
     frameon=True,
     fancybox=True,
     shadow=True,
-    title="Species",
+    title="Genus",
     title_fontsize=10
 )
 
