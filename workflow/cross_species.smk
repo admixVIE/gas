@@ -45,13 +45,13 @@ rule all:
             cutoff=["0.0005", "0.00005"],
         ),
         expand(
-            "results/plots/selscan/all/all.{method}_{maf}.top.{cutoff}.candidate.genes.svg",
+            "results/plots/selscan/all/all.{method}_{maf}.top.{cutoff}.candidate.genes.png",
             method=["xpehh", "xpnsl"],
             maf=["0.05"],
             cutoff=["0.0005", "0.00005"],
         ),
         expand(
-            "results/plots/betascan/all/all.m_{core_freq}.b1.top.{cutoff}.candidate.genes.svg",
+            "results/plots/betascan/all/all.m_{core_freq}.b1.top.{cutoff}.candidate.genes.png",
             core_freq=["0.15"],
             cutoff=["0.0005", "0.00005"],
         ),
@@ -173,7 +173,7 @@ rule plot_selscan_overlap_across_species:
         pongo_bed="results/plots/selscan/Pongo/circos/Pongo.{method}_{maf}.top.{cutoff}.genes.bed",
         gorilla_bed="results/plots/selscan/Gorilla/circos/Gorilla.{method}_{maf}.top.{cutoff}.genes.bed",
     output:
-        plot="results/plots/selscan/all/all.{method}_{maf}.top.{cutoff}.candidate.genes.svg",
+        plot="results/plots/selscan/all/all.{method}_{maf}.top.{cutoff}.candidate.genes.png",
     params:
         title="{method}\n(top {cutoff})",
     script:
@@ -186,7 +186,7 @@ rule plot_betascan_overlap_across_species:
         pongo_bed="results/plots/betascan/Pongo/circos/Pongo.m_{core_freq}.b1.top.{cutoff}.genes.bed",
         gorilla_bed="results/plots/betascan/Gorilla/circos/Gorilla.m_{core_freq}.b1.top.{cutoff}.genes.bed",
     output:
-        plot="results/plots/betascan/all/all.m_{core_freq}.b1.top.{cutoff}.candidate.genes.svg",
+        plot="results/plots/betascan/all/all.m_{core_freq}.b1.top.{cutoff}.candidate.genes.png",
     params:
         title="B1\n(top {cutoff})",
     script:
