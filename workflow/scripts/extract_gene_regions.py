@@ -70,26 +70,28 @@ for _, region in rg.iterrows():
     start = region["start"]
     end = region["end"]
     gene = region["gene"]
-    
+
     # Check if ANY outlier SNPs fall within this gene region
-#    snps_in_region = snps[
-#        (snps["Chr"] == chr_num) &
-#        (snps["Start"] >= start) &
-#        (snps["End"] <= end)
-#    ]
+    #    snps_in_region = snps[
+    #        (snps["Chr"] == chr_num) &
+    #        (snps["Start"] >= start) &
+    #        (snps["End"] <= end)
+    #    ]
     # Check SNPs: inside gene OR upstream/downstream of its gene
     snps_in_region = snps[
-        (snps["Chr"] == chr_num) &
-        (
+        (snps["Chr"] == chr_num)
+        & (
             # Case 1: Inside gene boundaries (intronic, exonic, UTR, etc.)
-            ((snps["Start"] >= start) & (snps["End"] <= end)) |
-            
+            ((snps["Start"] >= start) & (snps["End"] <= end))
+            |
             # Case 2: Upstream/downstream
-            ((snps["Func.refGene"].isin(["upstream", "downstream"])) &
-             (snps["Gene.refGene"] == gene))
+            (
+                (snps["Func.refGene"].isin(["upstream", "downstream"]))
+                & (snps["Gene.refGene"] == gene)
+            )
         )
     ]
-    
+
     # Only keep regions with at least 1 outlier SNP
     if len(snps_in_region) > 0:
         validated_regions.append([chr_str, start, end, gene])

@@ -51,7 +51,7 @@ for g in all_genes:
 
 df = pd.DataFrame(rows).set_index(lineages)
 
-plt.figure(figsize=(8,6))
+plt.figure(figsize=(8, 6))
 UpSet(df, subset_size="count", sort_categories_by="input").plot()
 plt.tight_layout()
 plt.savefig(snakemake.output.plot, bbox_inches="tight")
