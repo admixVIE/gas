@@ -56,7 +56,9 @@ autosomes = [f"chr{i}" for i in range(1, 23)]
 chr_bed_df = chr_bed_df[chr_bed_df[0].isin(autosomes)]
 
 # Create temporary filtered file
-filtered_chr_bed = snakemake.output.plot.replace(".svg", "_chr_filtered.bed").replace(".png", "_chr_filtered.bed")
+filtered_chr_bed = snakemake.output.plot.replace(".svg", "_chr_filtered.bed").replace(
+    ".png", "_chr_filtered.bed"
+)
 chr_bed_df.to_csv(filtered_chr_bed, sep="\t", header=False, index=False)
 
 # Initialize circos with filtered chromosomes
@@ -67,7 +69,7 @@ circos.add_cytoband_tracks((81, 85), cytoband_file)
 
 # Track positions (inner to outer)
 track_configs = [
-    ("Pan", pan_df, (65, 80), "#1f77b4"),    # Blue
+    ("Pan", pan_df, (65, 80), "#1f77b4"),  # Blue
     ("Pongo", pongo_df, (50, 65), "#ff7f0e"),  # Orange
     ("Gorilla", gorilla_df, (35, 50), "#2ca02c"),  # Green
 ]
@@ -99,7 +101,9 @@ fig = circos.plotfig()
 legend_elements = [
     mpatches.Patch(color="#1f77b4", label=f"Pan (n={pan_df['gene'].nunique()})"),
     mpatches.Patch(color="#ff7f0e", label=f"Pongo (n={pongo_df['gene'].nunique()})"),
-    mpatches.Patch(color="#2ca02c", label=f"Gorilla (n={gorilla_df['gene'].nunique()})"),
+    mpatches.Patch(
+        color="#2ca02c", label=f"Gorilla (n={gorilla_df['gene'].nunique()})"
+    ),
 ]
 
 # Position legend outside the plot area
@@ -112,7 +116,7 @@ legend = fig.legend(
     fancybox=True,
     shadow=True,
     title="Genus",
-    title_fontsize=10
+    title_fontsize=10,
 )
 
 # Save figure with extra space for legend

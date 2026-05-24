@@ -45,6 +45,17 @@ rule all:
             cutoff=["0.0005", "0.00005"],
         ),
         expand(
+            "results/betascan/all/all.m_{core_freq}.b1.top.{cutoff}.candidate.snps.overlap",
+            core_freq=["0.15"],
+            cutoff=["0.0005", "0.00005"],
+        ),
+        expand(
+            "results/selscan/all/all.{method}_{maf}.top.{cutoff}.candidate.snps.overlap",
+            method=["xpehh", "xpnsl"],
+            maf=["0.05"],
+            cutoff=["0.0005", "0.00005"],
+        ),
+        expand(
             "results/plots/selscan/all/all.{method}_{maf}.top.{cutoff}.candidate.genes.png",
             method=["xpehh", "xpnsl"],
             maf=["0.05"],
@@ -97,13 +108,74 @@ rule betascan_overlap_across_species:
         "scripts/get_overlap_genes_across_lineages.py"
 
 
+rule betascan_snp_overlap_across_species:
+    input:
+        gene_overlap=rules.betascan_overlap_across_species.output.genes,
+        primary_candidates=sum(
+            [
+                expand(
+                    "results/betascan/{sp}/{pp}/m_{core_freq}/candidates/{pp}.b1.top.{cutoff}.annotated.candidates",
+                    sp=[sp],
+                    pp=POPULATIONS[sp],
+                    allow_missing=True,
+                )
+                for sp in LINEAGES
+            ],
+            [],
+        ),
+        secondary_candidates=sum(
+            [
+                expand(
+                    "results/selscan/{sp}/lineages/{method}_{maf}/candidates/{ln}.{method}_{maf}.top.{cutoff}.annotated.candidates",
+                    sp=[sp],
+                    ln=LINEAGES[sp],
+                    method=["xpehh", "xpnsl"],
+                    maf=["0.05"],
+                    allow_missing=True,
+                )
+                for sp in LINEAGES
+            ],
+            [],
+        ),
+    output:
+        snps="results/betascan/all/all.m_{core_freq}.b1.top.{cutoff}.candidate.snps.overlap",
+    params:
+        primary_label="balancing_selection",
+        secondary_label="positive_selection",
+    script:
+        "scripts/get_overlap_snps_across_lineages.py"
+
+
+rule selscan_snp_overlap_across_species:
+    input:
+        gene_overlap=rules.selscan_overlap_across_species.output.genes,
+        primary_candidates=sum(
+            [
+                expand(
+                    "results/selscan/{sp}/lineages/{method}_{maf}/candidates/{ln}.{method}_{maf}.top.{cutoff}.annotated.candidates",
+                    sp=[sp],
+                    ln=LINEAGES[sp],
+                    allow_missing=True,
+                )
+                for sp in LINEAGES
+            ],
+            [],
+        ),
+    output:
+        snps="results/selscan/all/all.{method}_{maf}.top.{cutoff}.candidate.snps.overlap",
+    params:
+        primary_label="positive_selection",
+        secondary_label=None,
+    script:
+        "scripts/get_overlap_snps_across_lineages.py"
+
 
 # Merge population-level annotated.candidates to species-level
 def get_selscan_annotated_candidates(wildcards):
     lineages = LINEAGES[wildcards.species]
     return expand(
         "results/selscan/{{species}}/lineages/{{method}}_{{maf}}/candidates/{lineage}.{{method}}_{{maf}}.top.{{cutoff}}.annotated.candidates",
-        lineage=lineages
+        lineage=lineages,
     )
 
 
@@ -111,7 +183,7 @@ def get_betascan_annotated_candidates(wildcards):
     populations = POPULATIONS[wildcards.species]
     return expand(
         "results/betascan/{{species}}/{ppl}/m_{{core_freq}}/candidates/{ppl}.b1.top.{{cutoff}}.annotated.candidates",
-        ppl=populations
+        ppl=populations,
     )
 
 
