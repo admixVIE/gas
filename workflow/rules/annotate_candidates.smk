@@ -143,7 +143,7 @@ rule get_betascan_candidate_genes:
         betascan_genes="results/betascan/{species}/{ppl}/m_{core_freq}/candidates/{ppl}.b1.top.{cutoff}.candidate.genes",
     shell:
         """
-        sed '1d' {input.betascan_candidates} | grep -v ";" | awk '{{print $7}}' | sort | uniq -c | awk '{{print $2"\\t"$1}}' | sed '1igene\\tsnp_count' > {output.betascan_genes} || true
+        sed '1d' {input.betascan_candidates} | awk '{{print $7}}' | grep -v ";" | sort | uniq -c | awk '{{print $2"\\t"$1}}' | sed '1igene\\tsnp_count' > {output.betascan_genes} || true
         """
 
 
