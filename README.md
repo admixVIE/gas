@@ -1,6 +1,8 @@
 [![license](https://img.shields.io/badge/license-GPL%20v3-black.svg?style=flat-square)](LICENSE)
 [![build Status](https://img.shields.io/github/actions/workflow/status/admixVIE/gas/dry-run.yaml?branch=main&style=flat-square&label=dry-run)](https://github.com/admixVIE/gas/actions)
 
+[![DOI](https://zenodo.org/badge/1044799731.svg)](https://doi.org/10.5281/zenodo.21871011)
+
 # Great Ape Selection
 
 ## Introduction
